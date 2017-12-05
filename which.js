@@ -9,14 +9,17 @@ var path = require('path')
 var COLON = isWindows ? ';' : ':'
 var isexe = require('isexe')
 
-#function getNotFoundError (cmd) {
-  var er = new Error('not found: ' + cmd)
-  er.code = 'ENOENT'
+//发生错误，未找到是调用的函数  
+function getNotFoundError (cmd) {
+  var err = new Error('not found: ' + cmd)
+  err.code = 'ENOENT'
 
-  return er
+  return err
 }
 
-#function getPathInfo (cmd, opt) {
+
+//得到路径信息函数  
+function getPathInfo (cmd, opt) {
   var colon = opt.colon || COLON
   var pathEnv = opt.path || process.env.PATH || ''
   var pathExt = ['']
@@ -48,7 +51,9 @@ var isexe = require('isexe')
   }
 }
 
-#function which (cmd, opt, cb) {
+
+//异步方式
+function which (cmd, opt, cb) {
   if (typeof opt === 'function') {
     cb = opt
     opt = {}
@@ -92,7 +97,9 @@ var isexe = require('isexe')
   })(0, pathEnv.length)
 }
 
-#function whichSync (cmd, opt) {
+
+//同步方式
+function whichSync (cmd, opt) {
   opt = opt || {}
 
   var info = getPathInfo(cmd, opt)
