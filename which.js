@@ -1,7 +1,7 @@
 module.exports = which // 暴露which模块
 which.sync = whichSync
 
-var isWindows = process.platform === 'win32' || // 根据短路原则，||前边为真，返回前边  
+var isWindows = process.platform === 'win32' || // 根据短路原则，||前边为真，返回前边，判断系统类型  
     process.env.OSTYPE === 'cygwin' ||  
     process.env.OSTYPE === 'msys'  
  
@@ -21,10 +21,10 @@ function getNotFoundError (cmd) {
 //得到路径信息函数  
 function getPathInfo (cmd, opt) {
   var colon = opt.colon || COLON // colon:冒号  
-  var pathEnv = opt.path || process.env.PATH || ''
+  var pathEnv = opt.path || process.env.PATH || '' // 路径，环境变量  
   var pathExt = ['']
 
-  pathEnv = pathEnv.split(colon) // 冒号分割,分割为字符串数组  
+  pathEnv = pathEnv.split(colon) // 路径用冒号分割,分割为字符串数组  
 
   var pathExtExe = ''
   if (isWindows) {
@@ -35,19 +35,19 @@ function getPathInfo (cmd, opt) {
 
     // Always test the cmd itself first.  isexe will check to make sure
     // it's found in the pathExt set.
-    if (cmd.indexOf('.') !== -1 && pathExt[0] !== '') //
+    if (cmd.indexOf('.') !== -1 && pathExt[0] !== '') // cmd系统命令执行程序  
       pathExt.unshift('')
   }
 
   // If it has a slash, then we don't bother searching the pathenv.
-  // just check the file itself, and that's it.
+  // just check the file itself, and that's it.如果发生了故障，就不需要纠结于寻找，则只会检查文件本身  
   if (cmd.match(/\//) || isWindows && cmd.match(/\\/))
     pathEnv = ['']
 
   return {
-    env: pathEnv,
-    ext: pathExt,
-    extExe: pathExtExe
+    env: pathEnv, // 返回path路径
+    ext: pathExt, // 返回path路径文件后缀名  
+    extExe: pathExtExe //返回可执行文件  
   }
 }
 
@@ -65,27 +65,27 @@ function which (cmd, opt, cb) {
   var pathExtExe = info.extExe
   var found = []
 
-  ;(function F (i, l) {
-    if (i === l) {
+  ;(function F (i, l) { // 检查后路径  
+    if (i === l) {    
       if (opt.all && found.length)
         return cb(null, found)
       else
-        return cb(getNotFoundError(cmd))
+        return cb(getNotFoundError(cmd)) // 错误信息  
     }
 
     var pathPart = pathEnv[i]
     if (pathPart.charAt(0) === '"' && pathPart.slice(-1) === '"')
-      pathPart = pathPart.slice(1, -1)
+      pathPart = pathPart.slice(1, -1) // 去除前后引号  
 
-    var p = path.join(pathPart, cmd)
+    var p = path.join(pathPart, cmd) // 将多个参数组合成一个 path  
     if (!pathPart && (/^\.[\\\/]/).test(cmd)) { // 正则表达式  
       p = cmd.slice(0, 2) + p
     }
-    ;(function E (ii, ll) {
-      if (ii === ll) return F(i + 1, l)
-      var ext = pathExt[ii]
-      isexe(p + ext, { pathExt: pathExtExe }, function (er, is) {
-        if (!er && is) {
+    ;(function E (ii, ll) { // 检查后缀名    
+      if (ii === ll) return F(i + 1, l)  
+      var ext = pathExt[ii]  
+      isexe(p + ext, { pathExt: pathExtExe }, function (er, is) { // 通过检查文件扩展名来确定文件是否为可执行文件  
+        if (!er && is) {  
           if (opt.all)
             found.push(p + ext)
           else
