@@ -30,8 +30,8 @@ which('node', { path: someOtherPath }, function (err, resolved) {
 })  
 
 5.option  
-传递一个选项作为第二个参数  
-path：使用而不是PATH环境变量。 
-pathExt：使用而不是PATHEXT环境变量。 
+传递一个选项作为第二个参数   
+path：使用而不是PATH环境变量。  
+pathExt：使用而不是PATHEXT环境变量。  
 all：返回所有匹配的，而不仅仅是第一个。请注意，这意味着该函数将返回一个字符串数组而不是单个字符串。  
 
