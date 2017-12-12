@@ -14,22 +14,22 @@ which（' node '，function（err，resolvedPath){
   if (err) return console.error(err.message);    
   console.log(resolvedPath)   
 })  
-如果在PATH上找不到node则会返回错误信息，若找到则会返回绝对路径信息。       
+如果在PATH上找不到node则会返回错误信息，若找到则会返回绝对路径信息。        
 同步：  
-// throws if not found   如果没找到则抛出异常
-var resolved = which.sync('node')
+// throws if not found   如果没找到则抛出异常   
+var resolved = which.sync('node')   
 
-// if nothrow option is used, returns null if not found 
-resolved = which.sync('node', {nothrow: true})
+// if nothrow option is used, returns null if not found    
+resolved = which.sync('node', {nothrow: true})    
 
-// Pass options to override the PATH and PATHEXT environment vars.传递选项来覆盖PATH和PATHEXT环境变量
-which('node', { path: someOtherPath }, function (err, resolved) {
-  if (err)
-    throw err;
-  console.log('found at %j', resolved)
-})  
+// Pass options to override the PATH and PATHEXT environment vars.传递选项来覆盖PATH和PATHEXT环境变量    
+which('node', { path: someOtherPath }, function (err, resolved) {   
+  if (err)    
+    throw err;    
+  console.log('found at %j', resolved)   
+})     
 
-5.option  
+5.option     
 传递一个选项作为第二个参数   
 path：使用而不是PATH环境变量。  
 pathExt：使用而不是PATHEXT环境变量。  
