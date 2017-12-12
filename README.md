@@ -20,7 +20,7 @@ which（' node '，function（err，resolvedPath){
 var resolved = which.sync('node')   
 
 // if nothrow option is used, returns null if not found    
-resolved = which.sync('node', {nothrow: true})    
+resolved = whichsync('node', {nothrow: true})    
 
 // Pass options to override the PATH and PATHEXT environment vars.传递选项来覆盖PATH和PATHEXT环境变量    
 which('node', { path: someOtherPath }, function (err, resolved) {   
