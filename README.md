@@ -14,7 +14,7 @@ which（' node '，function（err，resolvedPath){
   if (err) return console.error(err.message);    
   console.log(resolvedPath)   
 })  
-如果在PATH上找不到node则会返回错误信息，若找到则会返回绝对路径信息。    
+如果在PATH上找不到node则会返回错误信息，若找到则会返回绝对路径信息。       
 同步：  
 // throws if not found   如果没找到则抛出异常
 var resolved = which.sync('node')
