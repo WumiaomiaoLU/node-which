@@ -1,18 +1,18 @@
-module.exports = which//暴露which模块
+module.exports = which // 暴露which模块
 which.sync = whichSync
 
-var isWindows = process.platform === 'win32' ||
-    process.env.OSTYPE === 'cygwin' ||
-    process.env.OSTYPE === 'msys'
-
+var isWindows = process.platform === 'win32' || // 根据短路原则，||前边为真，返回前边  
+    process.env.OSTYPE === 'cygwin' ||  
+    process.env.OSTYPE === 'msys'  
+ 
 var path = require('path')
 var COLON = isWindows ? ';' : ':'
-var isexe = require('isexe')
+var isexe = require('isexe') // 引用isexe模块  
 
-//发生错误，未找到是调用的函数  
+// 发生错误，未找到是调用的函数  
 function getNotFoundError (cmd) {
   var err = new Error('not found: ' + cmd)
-  err.code = 'ENOENT'
+  err.code = 'ENOENT' //代码报错解决方案，显示'ENOENT'  
 
   return err
 }
@@ -20,22 +20,22 @@ function getNotFoundError (cmd) {
 
 //得到路径信息函数  
 function getPathInfo (cmd, opt) {
-  var colon = opt.colon || COLON
+  var colon = opt.colon || COLON // colon:冒号  
   var pathEnv = opt.path || process.env.PATH || ''
   var pathExt = ['']
 
-  pathEnv = pathEnv.split(colon)
+  pathEnv = pathEnv.split(colon) // 冒号分割,分割为字符串数组  
 
   var pathExtExe = ''
   if (isWindows) {
-    pathEnv.unshift(process.cwd())
+    pathEnv.unshift(process.cwd()) // 在头部插入绝对路径
     pathExtExe = (opt.pathExt || process.env.PATHEXT || '.EXE;.CMD;.BAT;.COM')
     pathExt = pathExtExe.split(colon)
 
 
     // Always test the cmd itself first.  isexe will check to make sure
     // it's found in the pathExt set.
-    if (cmd.indexOf('.') !== -1 && pathExt[0] !== '')
+    if (cmd.indexOf('.') !== -1 && pathExt[0] !== '') //
       pathExt.unshift('')
   }
 
@@ -78,7 +78,7 @@ function which (cmd, opt, cb) {
       pathPart = pathPart.slice(1, -1)
 
     var p = path.join(pathPart, cmd)
-    if (!pathPart && (/^\.[\\\/]/).test(cmd)) {
+    if (!pathPart && (/^\.[\\\/]/).test(cmd)) { // 正则表达式  
       p = cmd.slice(0, 2) + p
     }
     ;(function E (ii, ll) {
