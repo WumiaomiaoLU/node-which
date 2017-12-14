@@ -34,13 +34,8 @@ function getPathInfo (cmd, opt) {
 
     if (cmd.indexOf('.') !== -1 && pathExt[0] !== '') // cmd系统命令执行程序  
       pathExt.unshift('')
-  }
-
-  // If it has a slash, then we don't bother searching the pathenv.
-  // just check the file itself, and that's it.如果发生了故障，就不需要纠结于寻找，则只会检查文件本身  
-  if (cmd.match(/\//) || isWindows && cmd.match(/\\/))
-    pathEnv = ['']
-
+  }     
+    
   return {
     env: pathEnv, // 返回path路径
     ext: pathExt, // 返回path路径文件后缀名  
