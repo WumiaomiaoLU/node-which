@@ -1,5 +1,5 @@
 module.exports = which // 暴露which模块
-which.sync = whichSync
+
 
 var isWindows = process.platform === 'win32' || // 根据短路原则，||前边为真，返回前边，判断系统类型  
     process.env.OSTYPE === 'cygwin' ||  
@@ -79,7 +79,7 @@ function which (cmd, opt, cb) {
 
     var p = path.join(pathPart, cmd) // 将多个参数组合成一个 path  
     if (!pathPart && (/^\.[\\\/]/).test(cmd)) { // 正则表达式  
-      p = cmd.slice(0, 2) + p
+      p = cmd.slice(0, 2) + p // p为最后找到的路径
     }
     ;(function E (ii, ll) { // 检查后缀名    
       if (ii === ll) return F(i + 1, l)  
