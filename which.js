@@ -2,7 +2,7 @@ module.exports = which // 暴露which模块
 
 
 var isWindows = process.platform === 'win32' || // 根据短路原则，||前边为真，返回前边，判断系统类型  
-    process.env.OSTYPE === 'cygwin' ||  
+    process.env.OSTYPE === 'cygwin' || // 操作系统类型      
     process.env.OSTYPE === 'msys'  
  
 var path = require('path')
@@ -32,9 +32,6 @@ function getPathInfo (cmd, opt) {
     pathExtExe = (opt.pathExt || process.env.PATHEXT || '.EXE;.CMD;.BAT;.COM')
     pathExt = pathExtExe.split(colon)
 
-
-    // Always test the cmd itself first.  isexe will check to make sure
-    // it's found in the pathExt set.
     if (cmd.indexOf('.') !== -1 && pathExt[0] !== '') // cmd系统命令执行程序  
       pathExt.unshift('')
   }
