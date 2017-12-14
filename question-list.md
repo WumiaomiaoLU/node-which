@@ -21,8 +21,8 @@
   which.js   
 - 项目有哪些代码模块？各个代码模块之间有什么关联性？  
   which模块和path模块    
-- 代码模块中有哪些函数？各个函数都是做什么的？  
-  1.发生错误，未找到是调用的函数       
+- 代码模块中有哪些函数？各个函数都是做什么的？    
+  1.发生错误，未找到时调用的函数       
     function getNotFoundError (cmd)  
   2.得到路径信息函数      
     function getPathInfo (cmd, opt)   
